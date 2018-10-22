@@ -16,6 +16,7 @@
     "node-sass": "^4.9.4",
     "npm": "^6.4.1",
     "sass-loader": "^7.1.0",
+    "string-loader": "^0.0.1",
     "style-loader": "^0.23.1",
     "url-loader": "^1.1.2",
     "webpack": "^4.22.0",
@@ -23,7 +24,10 @@
     "webpack-dev-server": "^3.1.9"
   },
   "scripts": {
-    "build" : "webpack --config ./config/webpack.config.js",
-    "dev" : "webpack-dev-server  --config ./config/webpack.config.js"
+    "build": "webpack --config ./config/webpack.config.js",
+    "dev": "webpack-dev-server  --config ./config/webpack.config.js"
+  },
+  "dependencies": {
+    "sme-router": "^0.12.8"
   }
 }

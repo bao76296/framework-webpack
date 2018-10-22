@@ -2,7 +2,7 @@ const PATH = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-
+// 按照配置文件， 将文件生成到 内存中吗?
 module.exports = {
     mode : 'development',
     entry : {
@@ -11,17 +11,19 @@ module.exports = {
     },
     output : {
         filename : ['name'].js,
-        path : PATH.resolve(__dirname, '../dev/js')
+        path : PATH.resolve(__dirname, '../dev')
     },
     devServer : {
-        contentBase : [PATH.resolve(__dirname, '../dev')],
+        // 让服务器从这两个目录中响应资源
+        // contentBase: [PATH.join(__dirname, "../dev"), PATH.join(__dirname, "../public")],
+        contentBase: [PATH.join(__dirname, "../dev")], // ????
         compress: true,
         port: 9000
     },
     plugins : [
         new HtmlWebpackPlugin({
             template : './src/index.html',
-            filename : 'myindex.html'
+            filename : 'index.html'
         }),
         new CopyWebpackPlugin([{
             from : PATH.resolve(__dirname, '../static'),
@@ -59,6 +61,13 @@ module.exports = {
                         plugins: ['@babel/plugin-transform-runtime']
                     }
                 }
+            },
+            {
+                test: /\.html$/,
+                exclude: /(node_modules|bower_components)/,
+                use: [
+                    { loader: 'string-loader',}
+                ]
             }
         ]
     }
