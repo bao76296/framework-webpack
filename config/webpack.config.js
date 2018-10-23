@@ -19,7 +19,12 @@ module.exports = {
         // contentBase: [PATH.join(__dirname, "../dev"), PATH.join(__dirname, "../public")],
         contentBase: [PATH.join(__dirname, "../dev")], // ????
         compress: true,
-        port: 9000
+        port: 9000,
+        proxy: {
+            '/api' : {
+                target : 'http://localhost:3000'
+            }
+        }
     },
     plugins : [
         new HtmlWebpackPlugin({
