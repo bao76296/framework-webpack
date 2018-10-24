@@ -1,7 +1,7 @@
 import SMERouter from  'sme-router';
+import home from '../controller/home';
+import book from '../controller/book';
 
-const home_template = require('../views/home.html');
-const two_template = require('../views/book-list.html');
 const not_found_template = require('../views/404.html');
 
 let router = null;
@@ -14,17 +14,18 @@ const init = () => {
     
     
     //中间件
+    
     router.use((req, res, next) => {
-       $('.sidebar-menu li[to = "' + req.route + '" ]').find('a').click();
+        changeContentHeader(
+            $('.sidebar-menu li').removeClass('active').filter((item, ele) => {
+                return $(ele).data('to') == req.route;
+            }).addClass('active').text()
+        )
     })
     
-    router.route('/home', (req, res, next) => {
-        res.render(home_template)
-    })
+    router.route('/home', home.render)
 
-    router.route('/two', (req, res) => {
-        res.render(two_template)
-    })
+    router.route('/bookList', book.render)
     
     router.route('/notfound', (req,res) => {
         res.render(not_found_template);
@@ -44,17 +45,9 @@ const init = () => {
 }
 
 const btnAddEvent = () => {
-    $('.sidebar-menu').on('click', (e) => {
-        var that = $(e.target);
-        router.go(
-            that.parent()
-            .siblings()
-            .removeClass('active')
-            .end()
-            .addClass('active')
-            .attr('to')
-        )
-        changeContentHeader(that.text())
+    $('.sidebar-menu [data-to]').on('click', function() { $(this);
+        router.go($(this).data('to'))
+       
     })
 }
 

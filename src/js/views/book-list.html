@@ -1,45 +1,53 @@
-<div class="row">
-        <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">书籍详细信息</h3>
-
-              <div class="box-tools">
-                <div class="input-group input-group-sm" style="width: 150px;">
-                  <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                  <div class="input-group-btn">
-                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body table-responsive no-padding">
-              <table class="table table-hover" style="text-align:center">
-                <tbody><tr>
-                  <th>#</th>
-                  <th>书名</th>
-                  <th>作者</th>
-                  <th>书编码</th>
-                  <th>出版社</th>
-                  <th>类别</th>
-                  <th>可借数量</th>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>百年孤独</td>
-                  <td>#aaaaaaaa23333</td>
-                  <td>66</td>
-                  <td>大周</td>
-                  <td>供养类</td>
-                  <td>10</td>
-                </tr>
-              
-              </tbody></table>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-        </div>
-      </div>
+<div class="box">
+  <div class="box-header with-border">
+    <button type="button" class="btn btn-block btn-warning btn-lg"> 添加图书</button>
+  </div>
+  <!-- /.box-header <i class=" glyphicon glyphicon-plus"></i> -->
+  <div class="box-body">
+    <table class="table table-bordered" style="text-align:center; vertacl-align:middle">
+      <tbody><tr>
+        <th style="width: 40px">#</th>
+        <th style="width:120px;">图片</th>
+        <th>书名</th>
+        <th>作者</th>
+        <th>出版社</th>
+        <th>编码</th>
+        <th>出版年份</th>
+        <th>类型</th>
+        <th>可借阅数量</th>
+        <th style="width: 200px">操作</th>
+      </tr>
+      <tr>
+        <td>1.</td>
+        <td><img src="../../../static/gitzhang.jpg" alt=""></td>
+        <td>
+         {{ data.bookname }}
+        </td>
+        <td>
+          {{ data.author }}
+        </td>
+        <td>{{ data.publishingHouse }}</td>
+        <td>{{ data.isbn }}</td>
+        <td>{{ data.year }}</td>
+        <td> {{data.type }} </td>
+        
+        <td> {{data.surplus }} </td>
+        <td>
+          <button type="button" class="btn btn-info ">修改</button>
+          <button type="button" class="btn btn-danger ">删除</button>
+        </td>
+      </tr>
+     
+    </tbody></table>
+  </div>
+  <!-- /.box-body -->
+  <div class="box-footer clearfix">
+    <ul class="pagination pagination-sm no-margin pull-right">
+      <li><a href="#">«</a></li>
+      <li><a href="#">1</a></li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+      <li><a href="#">»</a></li>
+    </ul>
+  </div>
+</div>
