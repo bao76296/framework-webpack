@@ -1,16 +1,94 @@
 import books_models from '../models/books';
-const bookList_template = require('../views/book-list.html');
+import btnEvent from '../util/eveE';
+import handleToastOndata from '../util/handleToastOnData';
+const bookList_template = require('../views/book/book-list.html');
+const bookSave_template = require('../views/book/book-save.html');
+const bookUpdate_template = require('../views/book/book-update.html')
 
-const render = async (req, res, next) => {
+//显示列表
+const list = async (req, res, next) => {
     let _data = await books_models.bookList();
-    console.log(_data)
+    // console.log(_data.data)
     var _html = template.render(bookList_template, {
         data : _data.data
     })
-    res.render(_html)
+    res.render(_html);
+    listBtnBindEvent();
+}
+
+const listBtnBindEvent = () => {
+    $('#toSave').on('click', () => { btnEvent.emit('go', '/bookSave')})
+    $('.btnChange').on('click', function() {
+        btnEvent.emit('go', '/bookUpdate', {id : $(this).parents('tr').data('id')})
+    })
+    $('.btnDelete').on('click', handleBtnDelete)
+}
+
+const handleBtnDelete = async function() {
+    let id = $(this).parents('tr').data('id');
+    let result = await books_models.bookDelete({id : id});
+    result.delete = id;
+    handleToastOndata(result, 'code', {
+        success : (data) => {
+            btnEvent.emit('go', '/bookList?_=' + data.delete)
+        }
+    })
+}
+
+//保存
+const save = async (req, res, next) => {
+    res.render(bookSave_template)
+    saveBtnbindEvent();
+}
+
+const saveBtnbindEvent = () => {
+    $('#back').on('click', function(){
+        btnEvent.emit('go', '/bookList');
+    })
+    $('form').submit(handleSubmitSave)
+}
+
+let isLoading = false;
+const handleSubmitSave = async function(e) {
+    e.preventDefault();
+    if(isLoading) return false;
+    let _data = $(this).serialize();
+    isLoading = true;
+    $('.form-horizontal button').addClass('disabled')
+    let result = null;
+    if($('input[type="hidden"]').length == 0){
+        result = await books_models.bookSave(_data);
+    } else {
+        result = await books_models.bookUpdate(_data)
+    }
+   
+   
+    isLoading = false;
+    handleToastOndata(result,'code',{
+        success : () => {
+            btnEvent.emit('go', '/bookList')
+        },
+        fail : ()=>{
+            $('.form-horizontal button').removeClass('disabled')
+        }
+    })
+}
+
+//修改更新
+const update = async(req, res, next) => {
+    let { id } = req.body;
+    let result = await books_models.bookList({id});
+   
+    let _html = template.render(bookUpdate_template, {data : result.data[0]});
+    res.render(_html);
+    saveBtnbindEvent();
 }
 
 
+
+
 export default {
-    render
+    list,
+    save,
+    update
 };

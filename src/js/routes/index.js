@@ -1,6 +1,7 @@
 import SMERouter from  'sme-router';
 import home from '../controller/home';
 import book from '../controller/book';
+import btnEvent from '../util/eveE';
 
 const not_found_template = require('../views/404.html');
 
@@ -16,8 +17,9 @@ const init = () => {
     //中间件
     
     router.use((req, res, next) => {
+        console.log(1)
         changeContentHeader(
-            $('.sidebar-menu li').removeClass('active').filter((item, ele) => {
+            $('.sidebar-menu li[data-to]').removeClass('active').filter((item, ele) => {
                 return $(ele).data('to') == req.route;
             }).addClass('active').text()
         )
@@ -25,7 +27,9 @@ const init = () => {
     
     router.route('/home', home.render)
 
-    router.route('/bookList', book.render)
+    router.route('/bookList', book.list)
+    router.route('/bookSave', book.save)
+    router.route('/bookUpdate', book.update)
     
     router.route('/notfound', (req,res) => {
         res.render(not_found_template);
@@ -41,11 +45,13 @@ const init = () => {
         
     })
 
+    btnEvent.on('go', (path, args = {}) => {router.go(path, args)});
+    btnEvent.on('back', () => { router.back()})
     
 }
 
 const btnAddEvent = () => {
-    $('.sidebar-menu [data-to]').on('click', function() { $(this);
+    $('.sidebar-menu li[data-to]').on('click', function() { $(this);
         router.go($(this).data('to'))
        
     })

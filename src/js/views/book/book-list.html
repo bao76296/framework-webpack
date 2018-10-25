@@ -1,46 +1,57 @@
 <div class="box">
   <div class="box-header with-border">
-    <button type="button" class="btn btn-block btn-warning btn-lg"> 添加图书</button>
+    <button type="button" type="button" id ="toSave" class="btn btn-block btn-warning btn-lg"> 添加图书</button>
   </div>
   <!-- /.box-header <i class=" glyphicon glyphicon-plus"></i> -->
   <div class="box-body">
-    <table class="table table-bordered" style="text-align:center; vertacl-align:middle">
+      {{if data.length > 0}}
+    <table class="table table-bordered" style="text-align:center; vertical-align:middle">
       <tbody><tr>
         <th style="width: 40px">#</th>
         <th style="width:120px;">图片</th>
         <th>书名</th>
         <th>作者</th>
         <th>出版社</th>
-        <th>编码</th>
         <th>出版年份</th>
         <th>类型</th>
+        <th>编码</th>
         <th>可借阅数量</th>
         <th style="width: 200px">操作</th>
       </tr>
-      <tr>
-        <td>1.</td>
+      
+      {{each data}}
+      <tr data-id="{{ $value._id }}">
+        <td> {{$index + 1 }} </td>
         <td><img src="../../../static/gitzhang.jpg" alt=""></td>
         <td>
-         {{ data.bookname }}
+         {{ $value.bookname }}
         </td>
         <td>
-          {{ data.author }}
+          {{ $value.author }}
         </td>
-        <td>{{ data.publishingHouse }}</td>
-        <td>{{ data.isbn }}</td>
-        <td>{{ data.year }}</td>
-        <td> {{data.type }} </td>
-        
-        <td> {{data.surplus }} </td>
+        <td>{{ $value.publishingHouse }}</td>
+        <td>{{ $value.year }}</td>
+        <td> {{$value.type }} </td>
+        <td>{{ $value.isbn }}</td>
+        <td> {{$value.surplus }} </td>
         <td>
-          <button type="button" class="btn btn-info ">修改</button>
-          <button type="button" class="btn btn-danger ">删除</button>
+          <button type="button" class="btn btn-info btnChange" >修改</button>
+          <button type="button" class="btn btn-danger btnDelete">删除</button>
         </td>
       </tr>
-     
+     {{/each}}
+     {{else }}
+     <div class="callout callout-info">
+        <h4>Tip!</h4>
+
+        <p>还没有数据，请添加书籍</p>
+      </div>
+
+     {{/if}}
     </tbody></table>
   </div>
   <!-- /.box-body -->
+  {{if data.length > 0}}
   <div class="box-footer clearfix">
     <ul class="pagination pagination-sm no-margin pull-right">
       <li><a href="#">«</a></li>
@@ -50,4 +61,5 @@
       <li><a href="#">»</a></li>
     </ul>
   </div>
+  {{/if}}
 </div>
