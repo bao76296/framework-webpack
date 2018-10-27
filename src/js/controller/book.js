@@ -7,34 +7,46 @@ const bookUpdate_template = require('../views/book/book-update.html')
 
 //显示列表
 const list = async (req, res, next) => {
-    let _data = await books_models.bookList();
-    // console.log(_data.data)
+    req.query = req.query || {};
+    let qurey = {
+        pageNo : req.query.pageNo,
+        pageSize : req.query.pageSize,
+        search : req.query.search
+    }
+    let _data = await books_models.bookList(req.query);
     var _html = template.render(bookList_template, {
         data : _data.data
     })
     res.render(_html);
-    listBtnBindEvent();
+    listBtnBindEvent(qurey);
 }
 
-const listBtnBindEvent = () => {
+const listBtnBindEvent = (qurey) => {
     $('#toSave').on('click', () => { btnEvent.emit('go', '/bookSave')})
     $('.btnChange').on('click', function() {
         btnEvent.emit('go', '/bookUpdate', {id : $(this).parents('tr').data('id')})
     })
-    $('.btnDelete').on('click', handleBtnDelete)
-}
-
-const handleBtnDelete = async function() {
-    let id = $(this).parents('tr').data('id');
-    let result = await books_models.bookDelete({id : id});
-    result.delete = id;
-    handleToastOndata(result, 'code', {
-        success : (data) => {
-            btnEvent.emit('go', '/bookList?_=' + data.delete)
-        }
+    $('.btnDelete').on('click', function(){
+        handleBtnDelete.bind(this,qurey)();
     })
 }
 
+const handleBtnDelete = async function(qurey) {
+    console.log(qurey.pageNo)
+    qurey.pageNo = qurey.pageNo ? qurey.pageNo : 1;  
+    let id = $(this).parents('tr').data('id');
+    let result = await books_models.bookDelete({id : id, pageNo : qurey.pageNo});
+    result.delete = id;
+    handleToastOndata(result, 'code', {
+        success : (data) => {
+            if(data.data.isback){
+                qurey.pageNo -= 1;
+            }
+            btnEvent.emit('go', '/bookList?pageNo=' + qurey.pageNo + '&_=' + data.delete)
+        }
+    })
+}
+ 
 //保存
 const save = async (req, res, next) => {
     res.render(bookSave_template)
@@ -44,7 +56,7 @@ const save = async (req, res, next) => {
 const saveBtnbindEvent = () => {
     $('#back').on('click', function(){
         btnEvent.emit('go', '/bookList');
-    })
+    }) 
     $('form').submit(handleSubmitSave)
 }
 
@@ -59,6 +71,7 @@ const handleSubmitSave = async function(e) {
     if($('input[type="hidden"]').length == 0){
         result = await books_models.bookSave(_data);
     } else {
+        let _data = $(this).serialize();
         result = await books_models.bookUpdate(_data)
     }
    

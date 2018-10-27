@@ -4,7 +4,7 @@
   </div>
   <!-- /.box-header <i class=" glyphicon glyphicon-plus"></i> -->
   <div class="box-body">
-      {{if data.length > 0}}
+      {{if data.item.length > 0}}
     <table class="table table-bordered" style="text-align:center; vertical-align:middle">
       <tbody><tr>
         <th style="width: 40px">#</th>
@@ -19,10 +19,10 @@
         <th style="width: 200px">操作</th>
       </tr>
       
-      {{each data}}
+      {{each data.item}}
       <tr data-id="{{ $value._id }}">
         <td> {{$index + 1 }} </td>
-        <td><img src="../../../static/gitzhang.jpg" alt=""></td>
+        <td><img src="http://localhost:3000/{{$value.bookimg}}" alt=""></td>
         <td>
          {{ $value.bookname }}
         </td>
@@ -51,14 +51,14 @@
     </tbody></table>
   </div>
   <!-- /.box-body -->
-  {{if data.length > 0}}
+  {{if data.item.length > 0}}
   <div class="box-footer clearfix">
     <ul class="pagination pagination-sm no-margin pull-right">
-      <li><a href="#">«</a></li>
-      <li><a href="#">1</a></li>
-      <li><a href="#">2</a></li>
-      <li><a href="#">3</a></li>
-      <li><a href="#">»</a></li>
+      <li><a href="#/bookList?pageNo={{data.pageInfo.pageNo == 1 ? 1 : data.pageInfo.pageNo -1}}">«</a></li>
+      <% for(var i = 0; i < data.pageInfo.pageSum; i++) {%>
+      <li class="{{if data.pageInfo.pageNo == i+1 }} active {{/if}}"><a href="#/bookList?pageNo={{i+1}}">{{i+1}}</a></li>
+      <%} %>
+      <li><a href="#/bookList?pageNo={{data.pageInfo.pageNo == data.pageInfo.pageSum? data.pageInfo.pageSum : ~~data.pageInfo.pageNo + 1 }}">»</a></li>
     </ul>
   </div>
   {{/if}}

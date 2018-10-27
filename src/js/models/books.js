@@ -12,11 +12,21 @@ const bookList = (data = {}) => {
 }
 
 const bookSave = (data) => {
-    return $.ajax({
-        url : '/api/' + version + '/books/save',
-        type : 'POST',
-        data,
-        success : res => { return res }
+    // return $.ajax({
+    //     url : '/api/' + version + '/books/save',
+    //     type : 'POST',
+    //     data,
+    //     success : res => { return res }
+    // })
+
+    return new Promise(function(resolve){
+        $('#saveFrom').ajaxSubmit({
+            url : '/api/' + version + '/books/save',
+            type : 'POST',
+            success : (results) =>{
+                resolve(results)
+            }
+        })
     })
 }
 
@@ -29,7 +39,6 @@ const bookDelete = (data) => {
 }
 
 const bookUpdate = (data) => {
-    console.log(data)
     return $.ajax({
         url : '/api/' + version + '/books/update',
         type : 'POST',

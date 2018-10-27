@@ -5,8 +5,7 @@ const handleToastBydata = (data, code, options ={}) => {
         success : options.success || none,
         fail : options.fail || none,
         isReact : typeof options.isReact == 'undefined' ? true : options.isReact
-    }   
-    console.log(isReact,data[code],data);
+    }
     if(data[code] == '200'){
         if(isReact) toast('操作成功',1000);
         setTimeout(() => {
