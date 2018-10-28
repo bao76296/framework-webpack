@@ -3,7 +3,13 @@ import router from './routes';
 
 const body_html = require('./views/body.html');
 
+import login from './util/isLogin'
 
-$('.wrapper').html(body_html);
+if(login.islogin()){
+    $('.wrapper').html(body_html);
 
-router.init()
+    router.init()
+} else {
+    window.location.href = '/admin.html';
+}
+

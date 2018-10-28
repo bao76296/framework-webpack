@@ -11,6 +11,16 @@ const bookList = (data = {}) => {
     })
 }
 
+
+const bookListOne = (data = {}) => {
+    return $.ajax({
+        url : '/api/' + version + '/books/listOne',
+        data,
+        type : 'get',
+        success : data => {return data;}
+    })
+}
+
 const bookSave = (data) => {
     // return $.ajax({
     //     url : '/api/' + version + '/books/save',
@@ -51,5 +61,6 @@ export default {
     bookList,
     bookSave,
     bookDelete,
-    bookUpdate
+    bookUpdate,
+    bookListOne
 }

@@ -11,8 +11,9 @@ const list = async (req, res, next) => {
     let qurey = {
         pageNo : req.query.pageNo,
         pageSize : req.query.pageSize,
-        search : req.query.search
+        serch : req.query.serch
     }
+    console.log(qurey)
     let _data = await books_models.bookList(req.query);
     var _html = template.render(bookList_template, {
         data : _data.data
@@ -28,6 +29,10 @@ const listBtnBindEvent = (qurey) => {
     })
     $('.btnDelete').on('click', function(){
         handleBtnDelete.bind(this,qurey)();
+    })
+    $('#search').on('click', function(){
+        var data = $('#searchValue').val();
+        btnEvent.emit('go', '/bookList?serch=' + data)
     })
 }
 
@@ -90,7 +95,7 @@ const handleSubmitSave = async function(e) {
 //修改更新
 const update = async(req, res, next) => {
     let { id } = req.body;
-    let result = await books_models.bookList({id});
+    let result = await books_models.bookListOne({id});
    
     let _html = template.render(bookUpdate_template, {data : result.data[0]});
     res.render(_html);

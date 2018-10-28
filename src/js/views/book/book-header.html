@@ -1,8 +1,9 @@
 <h1>
-    {{text}}
-    <small>{{description}}</small>
-  </h1>
-  <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-    <li class="active">Here</li>
+    {{data.text}}
+    <small>{{data.description}}</small>
+</h1>
+<ol class="breadcrumb">
+    {{each data.list}}
+    <li class= '{{$index == data.list.length -1 ? "acitve" : "" }}'><a href="{{$value.path ? $value.path : 'javascript:void(0)' }}"><i class="fa fa-dashboard"></i>{{$value.text}}</a></li>
+    {{/each}}
 </ol>

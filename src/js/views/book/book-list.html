@@ -1,9 +1,18 @@
 <div class="box">
-  <div class="box-header with-border">
+  <div class="box-header with-border pull-left" style = "border: none">
     <button type="button" type="button" id ="toSave" class="btn btn-block btn-warning btn-lg"> 添加图书</button>
   </div>
+  <div class="box-tools pagination pagination-sm no-margin pull-right" style="margin-top: 20px !important;margin-right: 20px !important">
+      <div class="input-group input-group-sm" style="width: 150px;">
+        <input type="text" name="table_search" id="searchValue" class="form-control pull-right" placeholder="Search">
+
+        <div class="input-group-btn">
+          <button type="button" id="search" class="btn btn-default"><i class="fa fa-search"></i></button>
+        </div>
+      </div>
+  </div>
   <!-- /.box-header <i class=" glyphicon glyphicon-plus"></i> -->
-  <div class="box-body">
+  <div class="box-body" style="clear:both; border-top: 1px solid #f4f4f4;">
       {{if data.item.length > 0}}
     <table class="table table-bordered" style="text-align:center; vertical-align:middle">
       <tbody><tr>
