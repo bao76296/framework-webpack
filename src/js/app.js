@@ -1,15 +1,23 @@
 import '../css/app.scss';
 import router from './routes';
+import user from './controller/user'
 
 const body_html = require('./views/body.html');
 
 import login from './util/isLogin'
 
-if(login.islogin()){
-    $('.wrapper').html(body_html);
+const render =  async () => {
+    if(await login.islogIn()){
+        $('.wrapper').html(body_html);
+        router.init()
 
-    router.init()
-} else {
-    window.location.href = '/admin.html';
+        await user.init();
+
+    } else {
+        window.location.href = '/admin.html';
+    }
 }
+
+render();
+
 

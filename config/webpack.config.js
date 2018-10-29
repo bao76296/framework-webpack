@@ -19,6 +19,7 @@ module.exports = {
         // 让服务器从这两个目录中响应资源
         // contentBase: [PATH.join(__dirname, "../dev"), PATH.join(__dirname, "../public")],
         contentBase: [PATH.join(__dirname, "../dev")], // ????
+        host : '10.9.189.4',
         compress: true,
         port: 9000,
         proxy: {
@@ -26,6 +27,7 @@ module.exports = {
                 target : 'http://localhost:3000'
             }
         }
+
     },
     plugins : [
         new HtmlWebpackPlugin({

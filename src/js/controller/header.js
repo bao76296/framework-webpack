@@ -9,7 +9,6 @@ const render_header =  (req, search) => {
 
 
     let data = header_info.pargeHeaderInfo(pathname,search);
-    console.log(data);
     var _html = template.render(header_html, {
         data : data
     });

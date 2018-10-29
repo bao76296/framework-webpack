@@ -1,6 +1,7 @@
 import admin_html from '../views/admin/admin.html';
-import admon_models from '../models/admin';
-
+import admin_models from '../models/admin';
+import handleToastOnData from '../util/handleToastOnData';
+import toast from '../util/toast';
 const render = () => {
     swiper_html('logIn');
     bindBtnEvent();
@@ -13,15 +14,30 @@ const bindBtnEvent = () => {
         swiper_html(type);
     })
 
-    $('.login-box-body').on('submit', '#logIn', function(e){
+    $('.login-box-body').on('submit', '#logIn',async function(e){
         e.preventDefault();
-        console.log(this)
+        let data = await admin_models.logIn($(this).serialize());
+        if(data.code == 200){
+            window.location.href = '/';
+        } else {
+            toast(data.data,1000) 
+        }
     })
 
-    $('.login-box-body').on('submit', '#signIn', function(e){
+    $('.login-box-body').on('submit', '#signIn',async function(e){
         e.preventDefault()
-        console.log($(this).serialize());
-        admon_models.signIn($(this).serialize())
+        let data = await admin_models.signIn($(this).serialize());
+        if(~~data.code == 201){
+            toast('账号已存在', 1000)
+        } else if(~~data.code == 200){
+            toast('注册成功', 1000)
+            setTimeout(() => {
+                swiper_html('logIn')
+            },1000)
+            
+        } else {
+            toast('无法预知的错误', 1000)
+        }
     })
 
 }

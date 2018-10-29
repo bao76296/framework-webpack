@@ -8,11 +8,23 @@ const signIn = (data)=> {
         type : 'post',
         data,
         success : (res) => {
-            console.log(res)
+            return res
+        }
+    })
+}
+
+const logIn = (data)=> {
+    return $.ajax({
+        url : '/api/' + version + '/admin/logIn',
+        type : 'post',
+        data,
+        success : (res) => {
+           return res
         }
     })
 }
 
 export default {
-    signIn
+    signIn,
+    logIn
 }
