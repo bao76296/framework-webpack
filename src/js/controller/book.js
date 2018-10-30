@@ -14,7 +14,6 @@ const list = async (req, res, next) => {
     let isLevel = await user_model.check('list');
     if(isLevel.code == 403){
         toast(isLevel.data, 1000);
-
         return ;
     }
 
@@ -24,7 +23,7 @@ const list = async (req, res, next) => {
         pageSize : req.query.pageSize,
         serch : req.query.serch
     }
-    console.log(qurey)
+    
     let _data = await books_models.bookList(req.query);
     var _html = template.render(bookList_template, {
         data : _data.data
@@ -48,7 +47,6 @@ const listBtnBindEvent = (qurey) => {
 }
 
 const handleBtnDelete = async function(qurey) {
-    console.log(qurey.pageNo)
     qurey.pageNo = qurey.pageNo ? qurey.pageNo : 1;  
     let id = $(this).parents('tr').data('id');
     let result = await books_models.bookDelete({id : id, pageNo : qurey.pageNo});
