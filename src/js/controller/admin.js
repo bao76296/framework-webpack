@@ -19,6 +19,7 @@ const bindBtnEvent = () => {
         let data = await admin_models.logIn($(this).serialize());
         if(data.code == 200){
             window.location.href = '/';
+            window.localStorage.token = data.data.token
         } else {
             toast(data.data,1000) 
         }

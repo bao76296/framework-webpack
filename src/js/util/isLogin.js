@@ -2,7 +2,10 @@ import user_models from '../models/user';
 
 const islogIn = async () => {
 
-    let data = await user_models.isLogIn();
+    let token = window.localStorage.getItem('token') || '';
+    let data = await user_models.isLogIn({
+        token : token
+    });
     return data.code == 200;
 
    

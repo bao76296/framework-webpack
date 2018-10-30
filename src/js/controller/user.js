@@ -1,8 +1,10 @@
 
 import user_model from '../models/user';
 const init = async () =>{
-
-    var data = await user_model.info()
+    let token = localStorage.getItem('token') || '';
+    var data = await user_model.info({
+        token : token
+    })
 
     $('.name').html(data.data.name);
     $('.exit').on('click', bindBtnExit)

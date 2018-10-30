@@ -1,9 +1,10 @@
 import vs from '../../config';
 const { version } = vs;
 
-const isLogIn = () => {
+const isLogIn = (data) => {
     return $.ajax({
         url : '/api/' + version + '/user/isLogIn',
+        data,
         success : (res) => {
             return res
         }
@@ -11,9 +12,10 @@ const isLogIn = () => {
 }
 
 
-const info = () => {
+const info = (data) => {
     return $.ajax({
         url : '/api/' + version + '/user/info',
+        data,
         success : (res) => {
             return res
         }
