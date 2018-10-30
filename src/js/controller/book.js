@@ -4,9 +4,20 @@ import handleToastOndata from '../util/handleToastOnData';
 const bookList_template = require('../views/book/book-list.html');
 const bookSave_template = require('../views/book/book-save.html');
 const bookUpdate_template = require('../views/book/book-update.html')
+import toast from '../util/toast';
+
+import user_model from '../models/user';
 
 //显示列表
 const list = async (req, res, next) => {
+
+    let isLevel = await user_model.check('list');
+    if(isLevel.code == 403){
+        toast(isLevel.data, 1000);
+
+        return ;
+    }
+
     req.query = req.query || {};
     let qurey = {
         pageNo : req.query.pageNo,
