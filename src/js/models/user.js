@@ -34,7 +34,7 @@ const exit = () => {
 const check = (data) =>{
     return $.ajax({
         url : '/api/' + version + '/user/check',
-        data : { data },
+        data,
         success : (res) => {
             return res
         }

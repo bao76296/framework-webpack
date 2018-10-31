@@ -10,8 +10,13 @@ import user_model from '../models/user';
 
 //显示列表
 const list = async (req, res, next) => {
-
-    let isLevel = await user_model.check('list');
+    
+    var token = window.localStorage.getItem('token')
+    var data = {
+        token : token,
+        data : 'list'
+    }
+    let isLevel = await user_model.check(data);
     if(isLevel.code == 403){
         toast(isLevel.data, 1000);
         return ;
@@ -53,7 +58,7 @@ const handleBtnDelete = async function(qurey) {
     result.delete = id;
     handleToastOndata(result, 'code', {
         success : (data) => {
-            if(data.data.isback){
+            if(data.data.isback && qurey.pageNo > 1){
                 qurey.pageNo -= 1;
             }
             btnEvent.emit('go', '/bookList?pageNo=' + qurey.pageNo + '&_=' + data.delete)
