@@ -1,4 +1,5 @@
 
+
 const pargeHeaderInfo = (pathname, serch) => {
     serch = serch || '';
     let headerText = {
@@ -50,8 +51,10 @@ const pargeHeaderInfo = (pathname, serch) => {
     return headerText[pathname] ||  {};
 }
 
-
-
+let headerUrlName = ['/home','/bookList', '/bookSave', '/bookUpdate', '/map' ]
+export {
+    headerUrlName
+}
 
 export default {
     pargeHeaderInfo

@@ -11,9 +11,7 @@ import user_model from '../models/user';
 //显示列表
 const list = async (req, res, next) => {
     
-    var token = window.localStorage.getItem('token')
     var data = {
-        token : token,
         data : 'list'
     }
     let isLevel = await user_model.check(data);

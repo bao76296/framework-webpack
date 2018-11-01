@@ -3,9 +3,7 @@ import user_models from '../models/user';
 const islogIn = async () => {
 
     let token = window.localStorage.getItem('token') || '';
-    let data = await user_models.isLogIn({
-        token : token
-    });
+    let data = await user_models.isLogIn();
     return data.code == 200;
 
    

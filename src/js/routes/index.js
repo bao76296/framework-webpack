@@ -4,6 +4,7 @@ import book from '../controller/book';
 import map from '../controller/map';
 import btnEvent from '../util/eveE';
 import render_header from '../controller/header';
+import { headerUrlName } from '../models/body-header';
 import URL from 'url'
 
 const not_found_template = require('../views/404.html');
@@ -28,12 +29,20 @@ const init = () => {
     // })
 
     router.route('/', (req, res, next) => {
+        
+        let pathname = URL.parse(req.url).pathname
+        if(URL.parse(req.url).pathname == ''){
+            res.redirect('/home');
+        }else if ( headerUrlName.every((item) => {
+            return item !=pathname
+        })){
+           
+            res.redirect('/notfound');
+        }
         render_header(req, pevSerch)
         pevSerch = URL.parse(req.url).search;
     });
-    
     router.route('/home', home.render)
-
     router.route('/bookList', book.list)
     router.route('/bookSave', book.save)
     router.route('/bookUpdate', book.update)
@@ -42,7 +51,6 @@ const init = () => {
         res.render(not_found_template);
         changeContentHeader('404 Error Page');
     })
-
     router.route('*', (req, res) => {
         if(req.url == ''){
             res.redirect('/home');
@@ -51,24 +59,19 @@ const init = () => {
         }
         
     })
-
     btnEvent.on('go', (path, args = {}) => {router.go(path, args)});
     btnEvent.on('back', () => { router.back()})
     
 }
-
 const btnAddEvent = () => {
     $('.sidebar-menu li[data-to]').on('click', function() { $(this);
         router.go($(this).data('to'))
     })
 }
-
 const changeContentHeader = (text) => {
     $('.content-header h1').text(text);
     // $('.content-header h1').html('Page Header        <small>Optional description</small> ')
 }
-
-
 export default {
     init
 }

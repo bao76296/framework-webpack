@@ -12,10 +12,9 @@ const isLogIn = (data) => {
 }
 
 
-const info = (data) => {
+const info = () => {
     return $.ajax({
         url : '/api/' + version + '/user/info',
-        data,
         success : (res) => {
             return res
         }
