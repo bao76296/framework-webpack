@@ -1,6 +1,7 @@
 import SMERouter from  'sme-router';
 import home from '../controller/home';
 import book from '../controller/book';
+import map from '../controller/map';
 import btnEvent from '../util/eveE';
 import render_header from '../controller/header';
 import URL from 'url'
@@ -36,7 +37,7 @@ const init = () => {
     router.route('/bookList', book.list)
     router.route('/bookSave', book.save)
     router.route('/bookUpdate', book.update)
-    
+    router.route('/map', map.map)
     router.route('/notfound', (req,res) => {
         res.render(not_found_template);
         changeContentHeader('404 Error Page');

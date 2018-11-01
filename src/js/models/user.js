@@ -22,14 +22,14 @@ const info = (data) => {
     })
 }
 
-const exit = () => {
-    return $.ajax({
-        url : '/api/' + version + '/user/exit',
-        success : (res) => {
-            return res
-        }
-    })
-}
+// const exit = () => {
+//     return $.ajax({
+//         url : '/api/' + version + '/user/exit',
+//         success : (res) => {
+//             return res
+//         }
+//     })
+// }
 
 const check = (data) =>{
     return $.ajax({
@@ -44,6 +44,6 @@ const check = (data) =>{
 export default {
     isLogIn,
     info,
-    exit,
+    // exit,
     check
 }

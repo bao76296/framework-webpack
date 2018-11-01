@@ -36,7 +36,15 @@ const pargeHeaderInfo = (pathname, serch) => {
             text : '404',
             description : '地址错误',
             list : []
+        },
+        '/map' : {
+            text : '位置',
+            description : '位置信息',
+            list : [
+                {text : '位置'}
+            ]
         }
+
     }
 
     return headerText[pathname] ||  {};

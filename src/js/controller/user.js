@@ -11,10 +11,10 @@ const init = async () =>{
 }
 
 const bindBtnExit = async () => {
-    let data = await user_model.exit();
-    if(data.code == 200){
-        window.location.href = '/admin.html'
-    }
+    window.localStorage.removeItem('token');
+   
+    window.location.href = '/admin.html'
+    
 }
 
 
